@@ -1,0 +1,99 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.redisOperator.name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    control-plane: "{{ .Values.redisOperator.name }}"
+    app.kubernetes.io/name: {{ .Values.redisOperator.name }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      name: {{ .Values.redisOperator.name }}
+  template:
+    metadata:
+      annotations:
+      {{- with .Values.redisOperator.podAnnotations }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        name: {{ .Values.redisOperator.name }}
+      {{- with .Values.redisOperator.podLabels }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+      - name: "{{ .Values.redisOperator.name }}"
+        {{- if not .Values.redisOperator.imagePrefix }}
+        image: "{{ .Values.redisOperator.imageName }}:{{ .Values.redisOperator.imageTag }}"
+        {{ else }}
+        image: "{{ .Values.redisOperator.imagePrefix }}/{{ .Values.redisOperator.imageName }}:{{ .Values.redisOperator.imageTag }}"
+        {{ end }}
+        imagePullPolicy: {{ .Values.redisOperator.imagePullPolicy }}
+        env:
+{{- if .Values.localRegistry }}
+        - name: LOCAL_REGISTRY
+          value: {{ .Values.localRegistry }}
+{{- end }}
+{{- if .Values.NamespaceOverride }}
+        - name: NAMESPACE_OVERRIDE
+          value: {{ .Values.NamespaceOverride }}
+{{- end }}
+
+
+#redisImageName: redis
+{{- if .Values.redisImageName }}
+        - name: REDIS_IMAGE_NAME
+          value: {{ .Values.redisImageName  }}
+{{- end }}
+
+#redisExporterImageName: redis-exporter
+{{- if .Values.redisExporterImageName }}
+        - name: REDIS_EXPORTER_IMAGE_NAME
+          value: {{ .Values.redisExporterImageName }}
+{{- end }}
+
+#redisProxyImageName: predixy
+{{- if .Values.redisProxyImageName }}
+        - name: REDIS_PROXY_IMAGE_NAME
+          value: {{ .Values.redisProxyImageName }}
+{{- end }}
+
+#redisProxyExporterImageName: predixy-exporter
+{{- if .Values.redisProxyExporterImageName }}
+        - name: REDIS_PROXY_EXPORTER_IMAGE_NAME
+          value: {{ .Values.redisProxyExporterImageName }}
+{{- end }}
+
+
+        command:
+        - /manager
+        args:
+        - --leader-elect
+{{- if .Values.resources }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+{{- end }}
+      nodeSelector:
+{{- with .Values.nodeSelector }}
+{{ toYaml . | indent 8 }}
+{{- end }}
+      priorityClassName: {{ .Values.priorityClassName }}
+{{- with .Values.affinity }}
+      affinity: {{ toYaml . | nindent 8 }}
+{{- end }}
+      tolerations:
+{{- if .Values.tolerateAllTaints }}
+        - operator: Exists
+{{- end }}
+{{- with .Values.tolerations }}
+{{ toYaml . | indent 8 }}
+{{- end }}
+      serviceAccountName: "{{ .Values.serviceAccountName }}"
+      serviceAccount: "{{ .Values.serviceAccountName }}"
