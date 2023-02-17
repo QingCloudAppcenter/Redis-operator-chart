@@ -1,3 +1,4 @@
+{{- if eq .Values.serviceMonitor true }}
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -57,3 +58,4 @@ spec:
   - port: predixy-exporter
     path: /metrics
     interval: 10s
+{{- end }}
