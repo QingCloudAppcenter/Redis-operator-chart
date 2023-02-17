@@ -41,9 +41,9 @@ spec:
         - name: LOCAL_REGISTRY
           value: {{ .Values.localRegistry }}
 {{- end }}
-{{- if .Values.NamespaceOverride }}
+{{- if .Values.namespaceOverride }}
         - name: NAMESPACE_OVERRIDE
-          value: {{ .Values.NamespaceOverride }}
+          value: {{ .Values.namespaceOverride }}
 {{- end }}
 
 
