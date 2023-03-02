@@ -6,6 +6,7 @@ metadata:
   name: redis-cluster-monitoring
   namespace: {{ .Release.Namespace }}
   labels:
+    app.kubernetes.io/vendor: kubesphere
     redis-operator: "true"
     env: production
 spec:
@@ -26,6 +27,7 @@ metadata:
   name: redis-sentinel-monitoring
   namespace: {{ .Release.Namespace }}
   labels:
+    app.kubernetes.io/vendor: kubesphere
     redis-operator: "true"
     env: production
 spec:
@@ -46,6 +48,7 @@ metadata:
   name: redis-proxy-monitoring
   namespace: {{ .Release.Namespace }}
   labels:
+    app.kubernetes.io/vendor: kubesphere
     redis-operator: "true"
     env: production
 spec:
