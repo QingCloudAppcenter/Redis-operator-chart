@@ -2,6 +2,28 @@ apiVersion: v1
 entries:
   redis-operator:
   - apiVersion: v2
+    appVersion: 1.2.12
+    created: "2023-03-14T08:47:15.550390423Z"
+    description: Provides easy redis setup definitions for Kubernetes services, and deployment.
+    digest: af866636fb8eccf16378068bc604490a800c188a5f1c6a1db3106e3e5e7f760f
+    home: https://github.com/QingCloudAppcenter/Redis-operator
+    icon: https://github.com/QingCloudAppcenter/Redis-operator/raw/main/static/redis-operator-logo.png
+    keywords:
+    - operator
+    - redis
+    - RadonDB
+    - kubernetes
+    - openshift
+    - KubeSphere
+    maintainers:
+    - name: RadonDB
+    name: redis-operator
+    sources:
+    - https://github.com/QingCloudAppcenter/Redis-operator
+    urls:
+    - https://github.com/QingCloudAppcenter/Redis-operator-chart/releases/download/redis-operator-1.2.12/redis-operator-1.2.12.tgz
+    version: 1.2.12
+  - apiVersion: v2
     appVersion: 1.2.10
     created: "2023-03-08T02:20:21.119733248Z"
     description: Provides easy redis setup definitions for Kubernetes services, and deployment.
