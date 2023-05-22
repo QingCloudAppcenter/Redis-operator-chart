@@ -37,3 +37,4 @@ tolerateAllTaints: false
 tolerations: []
 affinity: {}
 serviceMonitor: true
+redisPasswordEncrypt: 0

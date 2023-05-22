@@ -37,6 +37,11 @@ spec:
         {{ end }}
         imagePullPolicy: {{ .Values.redisOperator.imagePullPolicy }}
         env:
+{{- if .Values.redisPasswordEncrypt }}
+        - name: REDIS_PASSWORD_ENCRYPT 
+          value: "{{ .Values.redisPasswordEncrypt }}"
+{{- end }}
+
 {{- if .Values.localRegistry }}
         - name: LOCAL_REGISTRY
           value: {{ .Values.localRegistry }}
