@@ -5,7 +5,7 @@ redisOperator:
   imageTag: v1.2.15
   imagePullPolicy: IfNotPresent
   imagePrefix: docker.io
-
+ 
   # Additional pod annotations
   podAnnotations: {}
   # Additional Pod labels (e.g. for filtering Pod by custom labels)
