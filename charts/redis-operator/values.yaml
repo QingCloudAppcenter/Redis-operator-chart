@@ -2,7 +2,7 @@
 redisOperator:
   name: redis-operator
   imageName: radondb/redis-operator
-  imageTag: v1.2.14
+  imageTag: v1.2.15
   imagePullPolicy: IfNotPresent
   imagePrefix: docker.io
 
@@ -18,6 +18,8 @@ redisImageName: redis
 redisExporterImageName: redis-exporter
 redisProxyImageName: predixy
 redisProxyExporterImageName: predixy-exporter
+# log Level Optional: "INFO", "NOTICE", "WARN", "ERROR", "FATAL"
+logLevel: NOTICE
 
 resources:
   limits:

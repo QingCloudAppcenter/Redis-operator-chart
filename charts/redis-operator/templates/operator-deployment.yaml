@@ -76,6 +76,10 @@ spec:
           value: {{ .Values.redisProxyExporterImageName }}
 {{- end }}
 
+{{- if .Values.logLevel }}
+        - name: LOG_LEVEL 
+          value: {{ .Values.logLevel}}
+{{- end }}
 
         command:
         - /manager
