@@ -40,3 +40,7 @@ tolerations: []
 affinity: {}
 serviceMonitor: true
 redisPasswordEncrypt: 0
+
+customLabels:
+  serviceMonitor:
+    labels:

@@ -1,3 +1,4 @@
+{{ if .Capabilities.APIVersions.Has "monitoring.coreos.com/v1" -}}
 {{- if eq .Values.serviceMonitor true }}
 ---
 apiVersion: monitoring.coreos.com/v1
@@ -9,6 +10,9 @@ metadata:
     app.kubernetes.io/vendor: kubesphere
     redis-operator: "true"
     env: production
+    {{- if .Values.customLabels.serviceMonitor.labels }}
+    {{- toYaml .Values.customLabels.serviceMonitor.labels | nindent 4 }}
+    {{- end }}
 spec:
   selector:
     matchLabels:
@@ -30,6 +34,9 @@ metadata:
     app.kubernetes.io/vendor: kubesphere
     redis-operator: "true"
     env: production
+    {{- if .Values.customLabels.serviceMonitor.labels }}
+    {{- toYaml .Values.customLabels.serviceMonitor.labels | nindent 4 }}
+    {{- end }}
 spec:
   selector:
     matchLabels:
@@ -51,6 +58,9 @@ metadata:
     app.kubernetes.io/vendor: kubesphere
     redis-operator: "true"
     env: production
+    {{- if .Values.customLabels.serviceMonitor.labels }}
+    {{- toYaml .Values.customLabels.serviceMonitor.labels | nindent 4 }}
+    {{- end }}
 spec:
   selector:
     matchLabels:
@@ -62,3 +72,4 @@ spec:
     path: /metrics
     interval: 10s
 {{- end }}
+{{ end }}
