@@ -30,31 +30,15 @@ spec:
     spec:
       containers:
       - name: "{{ .Values.redisOperator.name }}"
-        {{- if and (not .Values.redisOperator.imagePrefix) (not .Values.global.imageRegistry) }}
-        image: "{{ .Values.redisOperator.imageName }}:{{ .Values.redisOperator.imageTag }}"
-        {{ else }}
-        {{- if .Values.global.imageRegistry }}
-        image: "{{ .Values.global.imageRegistry }}/{{ .Values.redisOperator.imageName }}:{{ .Values.redisOperator.imageTag }}"
-        {{- else }}
-        image: "{{ .Values.redisOperator.imagePrefix }}/{{ .Values.redisOperator.imageName }}:{{ .Values.redisOperator.imageTag }}"
-        {{ end }}
-        {{ end }}
+        image: "{{ default "docker.io" (default .Values.localRegistry .Values.global.imageRegistry) }}/{{ .Values.redisOperator.imageName }}:{{ .Values.redisOperator.imageTag }}"
         imagePullPolicy: {{ .Values.redisOperator.imagePullPolicy }}
         env:
 {{- if .Values.redisPasswordEncrypt }}
         - name: REDIS_PASSWORD_ENCRYPT 
           value: "{{ .Values.redisPasswordEncrypt }}"
 {{- end }}
-
-{{ if .Values.global.imageRegistry }}
         - name: LOCAL_REGISTRY
-          value: {{ .Values.global.imageRegistry }}
-{{- else }}
-  {{- if .Values.localRegistry }}
-        - name: LOCAL_REGISTRY
-          value: {{ .Values.localRegistry }}
-  {{- end }}
-{{- end }}
+          value: {{ default "docker.io" (default .Values.localRegistry .Values.global.imageRegistry) }}
 {{- if .Values.namespaceOverride }}
         - name: NAMESPACE_OVERRIDE
           value: {{ .Values.namespaceOverride }}
