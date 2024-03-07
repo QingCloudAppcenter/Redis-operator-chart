@@ -30,10 +30,14 @@ spec:
     spec:
       containers:
       - name: "{{ .Values.redisOperator.name }}"
-        {{- if not .Values.redisOperator.imagePrefix }}
+        {{- if and (not .Values.redisOperator.imagePrefix) (not .Values.global.imageRegistry) }}
         image: "{{ .Values.redisOperator.imageName }}:{{ .Values.redisOperator.imageTag }}"
         {{ else }}
+        {{- if .Values.global.imageRegistry }}
+        image: "{{ .Values.global.imageRegistry }}/{{ .Values.redisOperator.imageName }}:{{ .Values.redisOperator.imageTag }}"
+        {{- else }}
         image: "{{ .Values.redisOperator.imagePrefix }}/{{ .Values.redisOperator.imageName }}:{{ .Values.redisOperator.imageTag }}"
+        {{ end }}
         {{ end }}
         imagePullPolicy: {{ .Values.redisOperator.imagePullPolicy }}
         env:
@@ -42,9 +46,14 @@ spec:
           value: "{{ .Values.redisPasswordEncrypt }}"
 {{- end }}
 
-{{- if .Values.localRegistry }}
+{{ if .Values.global.imageRegistry }}
+        - name: LOCAL_REGISTRY
+          value: {{ .Values.global.imageRegistry }}
+{{- else }}
+  {{- if .Values.localRegistry }}
         - name: LOCAL_REGISTRY
           value: {{ .Values.localRegistry }}
+  {{- end }}
 {{- end }}
 {{- if .Values.namespaceOverride }}
         - name: NAMESPACE_OVERRIDE
