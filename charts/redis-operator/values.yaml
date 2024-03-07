@@ -1,4 +1,7 @@
 ---
+global:
+  imageRegistry: ""
+
 redisOperator:
   name: redis-operator
   imageName: radondb/redis-operator
