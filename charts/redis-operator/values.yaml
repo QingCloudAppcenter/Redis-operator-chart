@@ -1,11 +1,12 @@
 ---
 global:
   imageRegistry: ""
+  imagePullSecrets: []
 
 redisOperator:
   name: redis-operator
   imageName: radondb/redis-operator
-  imageTag: v1.3.2
+  imageTag: v1.3.3
   imagePullPolicy: IfNotPresent
   imagePrefix: docker.io
  

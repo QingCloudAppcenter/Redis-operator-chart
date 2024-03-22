@@ -32,6 +32,10 @@ spec:
       - name: "{{ .Values.redisOperator.name }}"
         image: "{{ default "docker.io" (default .Values.localRegistry .Values.global.imageRegistry) }}/{{ .Values.redisOperator.imageName }}:{{ .Values.redisOperator.imageTag }}"
         imagePullPolicy: {{ .Values.redisOperator.imagePullPolicy }}
+        {{- with .Values.global.imagePullSecrets }}
+        imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
         env:
 {{- if .Values.redisPasswordEncrypt }}
         - name: REDIS_PASSWORD_ENCRYPT 
@@ -43,7 +47,8 @@ spec:
         - name: NAMESPACE_OVERRIDE
           value: {{ .Values.namespaceOverride }}
 {{- end }}
-
+        - name: IMAGE_PULL_SECRETS
+          value: {{ join "," .Values.global.imagePullSecrets }}
 
 #redisImageName: redis
 {{- if .Values.redisImageName }}
