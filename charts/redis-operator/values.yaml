@@ -48,3 +48,4 @@ redisPasswordEncrypt: 0
 customLabels:
   serviceMonitor:
     labels:
+      app.kubernetes.io/vendor: kubesphere
