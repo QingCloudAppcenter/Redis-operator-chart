@@ -229,6 +229,8 @@ spec:
                 - image
                 - redisVersion
                 type: object
+              nodePort:
+                type: boolean
               nodeSelector:
                 additionalProperties:
                   type: string
