@@ -185,11 +185,6 @@ spec:
                           type: string
                       type: object
                     type: array
-                  logOutput:
-                    enum:
-                    - stdout
-                    - logfile
-                    type: string
                   redisSecret:
                     description: ExistingPasswordSecret is the struct to access the
                       existing secret
@@ -4838,6 +4833,17 @@ spec:
                 type: string
               state:
                 type: string
+              tasks:
+                items:
+                  properties:
+                    extra:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  type: object
+                type: array
             type: object
         required:
         - spec
