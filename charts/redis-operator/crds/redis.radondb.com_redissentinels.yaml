@@ -197,6 +197,7 @@ spec:
                     enum:
                     - 6.2.5
                     - 7.0.4
+                    - 7.2.6
                     type: string
                   resources:
                     description: ResourceRequirements describes the compute resource

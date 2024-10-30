@@ -959,11 +959,6 @@ spec:
                           type: string
                       type: object
                     type: array
-                  logOutput:
-                    enum:
-                    - stdout
-                    - logfile
-                    type: string
                   redisSecret:
                     description: ExistingPasswordSecret is the struct to access the
                       existing secret
@@ -977,6 +972,7 @@ spec:
                     enum:
                     - 6.2.5
                     - 7.0.4
+                    - 7.2.6
                     type: string
                   resources:
                     description: ResourceRequirements describes the compute resource
@@ -3080,11 +3076,6 @@ spec:
                               type: string
                           type: object
                         type: array
-                      logOutput:
-                        enum:
-                        - stdout
-                        - logfile
-                        type: string
                       redisSecret:
                         description: ExistingPasswordSecret is the struct to access
                           the existing secret
@@ -3098,6 +3089,7 @@ spec:
                         enum:
                         - 6.2.5
                         - 7.0.4
+                        - 7.2.6
                         type: string
                       resources:
                         description: ResourceRequirements describes the compute resource
