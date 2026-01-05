@@ -80,7 +80,7 @@ spec:
 {{- end }}
 
         command:
-        - /manager
+        - /entrypoint.sh
         args:
         - --leader-elect
 {{- if .Values.resources }}
